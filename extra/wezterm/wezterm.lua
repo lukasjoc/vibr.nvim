@@ -33,26 +33,25 @@ config.colors = {
     split = "#282c34",
 
     ansi = {
-        "#283457", -- Gray
-        "#f44747", -- Red
-        "#fffff0", -- Green
-        "#fff200", -- Yellow
-        "#73b8f1", -- Blue
-        "#ff66cc", -- Pink
-        "#29d4f2", -- Cyan
-        "#abb2bf"  -- White
+        "#283457",
+        "#f44747",
+        "#afff5e",
+        "#fff200",
+        "#73b8f1",
+        "#ff66cc",
+        "#29d4f2",
+        "#abb2bf",
     },
 
     brights = {
-        "#abb2bf", -- Gray
-        "#f44747", -- Red
-        "#ffff5f", -- Green
-        "#fff200", -- Yellow
-        "#73b8f1", -- Blue
-        "#ff66cc", -- Pink
-        "#29d4f2", -- Cyan
-        "#ffffff"  -- White
+        "#abb2bf",
+        "#f44747",
+        "#ffff5f",
+        "#fff200",
+        "#73b8f1",
+        "#ff66cc",
+        "#29d4f2",
+        "#ffffff",
     },
 }
-
 return config
