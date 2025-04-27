@@ -1,95 +1,74 @@
----@class Pallete
----@field vbrNone                string
----@field vbrFg                  string
----@field vbrFg1                 string
----@field vbrFg2                 string
----@field vbrBg                  string
----@field vbrBg1                 string
----@field vbrCursorBg            string
----@field vbrCursorFg            string
----@field vbrCursorBorder        string
----@field vbrSelectionBg         string
----@field vbrSelectionBgBlue     string
----@field vbrSelectionBgRed      string
----@field vbrSelectionBgYellow   string
----@field vbrSelectionFg         string
----@field vbrGray                string
----@field vbrOrange              string
----@field vbrOrange1             string
----@field vbrGreen               string
----@field vbrGreen1              string
----@field vbrGreen2              string
----@field vbrYellow              string
----@field vbrYellow1             string
----@field vbrBlue                string
----@field vbrBlue1               string
----@field vbrBlue2               string
----@field vbrRed                 string
----@field vbrPink                string
----@field vbrCyan                string
----@field vbrPurple              string
----@field vbrPurple1             string
----@field vbrWhite               string
----@field vbrBrightGray          string
----@field vbrBrightRed           string
----@field vbrBrightGreen         string
----@field vbrBrightYellow        string
----@field vbrBrightBlue          string
----@field vbrBrightPink          string
----@field vbrBrightCyan          string
----@field vbrBrightWhite         string
+--- @class Pallete
+--- @field vbrNone string
+--- @field vbrFg string
+--- @field vbrFgDim string
+--- @field vbrBg string
+--- @field vbrBgAlt string
+--- @field vbrGray string
+--- @field vbrRed string
+--- @field vbrOrange string
+--- @field vbrYellow string
+--- @field vbrGreen string
+--- @field vbrBlue string
+--- @field vbrPurple string
+--- @field vbrCyan string
+--- @field vbrPink string
+--- @field vbrWhite string
+--- @field vbrError string
+--- @field vbrHint string
+--- @field vbrWarning string
+--- @field vbrInfo string
+--- @field vbrSelectionBg string
+--- @field vbrSelectionFg string
 local pallete = {}
 
----@return Pallete
+--- @return Pallete
 pallete.get_pallete = function()
+    local isDark    = vim.o.background == "dark"
+
+    local vbrNone   = "NONE"
+
+    local vbrGray   = isDark and "#8f9bb3" or "#3e4b59"
+    local vbrRed    = "#ff5c57"
+    local vbrOrange = "#ff8c00"
+    local vbrYellow = "#cc9900"
+    local vbrGreen  = "#1f7766"
+    local vbrBlue   = isDark and "#007acc" or "#005fa3"
+    local vbrPurple = "#7e57c2"
+    local vbrCyan   = isDark and "#18b2cd" or "#00b0b9"
+    local vbrPink   = "#ff4081"
+    local vbrWhite  = "#ffffff"
+    local vbrBlack  = "#000000"
+
+    local vbrFgDim  = "#abb2bf"
+    local vbrBgAlt  = "#111111"
+
     return {
-        vbrNone              = "NONE",
+        ---@type string
+        vbrNone        = vbrNone,
 
-        vbrFg                = "#abb2bf",
-        vbrFg1               = "#b0b0b0",
-        vbrFg2               = "#4c5b6e",
-        vbrBg                = "#282c34",
-        vbrBg1               = "#1e1e1e",
+        vbrFg          = isDark and "#b0b0b0" or "#2e3440",
+        vbrFgDim       = isDark and vbrFgDim or "#6c7a94",
+        vbrBg          = isDark and vbrBlack or "#FFFFF0",
+        vbrBgAlt       = isDark and vbrBgAlt or "#e6e1d6",
 
-        vbrCursorBg          = "#ffffff",
-        vbrCursorFg          = "#000000",
-        vbrCursorBorder      = "#ffffff",
+        vbrGray        = vbrGray,
+        vbrRed         = vbrRed,
+        vbrOrange      = vbrOrange,
+        vbrYellow      = vbrYellow,
+        vbrGreen       = vbrGreen,
+        vbrBlue        = vbrBlue,
+        vbrPurple      = vbrPurple,
+        vbrCyan        = vbrCyan,
+        vbrPink        = vbrPink,
+        vbrWhite       = vbrWhite,
 
-        -- Selection and Overlays
-        vbrSelectionBg       = "#283457",
-        vbrSelectionBgBlue   = "#3a4f7a",
-        vbrSelectionBgRed    = "#5a2e40",
-        vbrSelectionBgYellow = "#5a523a",
-        vbrSelectionFg       = "#ffffff",
-
-        -- Normals
-        vbrGray              = "#878787",
-        vbrOrange            = "#ff6600",
-        vbrOrange1           = "#ff9e64",
-        vbrGreen             = "#00ff99",
-        vbrGreen1            = "#6a9955",
-        vbrGreen2            = "#afff5e",
-        vbrYellow            = "#fff200",
-        vbrYellow1           = "#ffff5f",
-        vbrBlue              = "#73b8f1",
-        vbrBlue1             = "#569cd6",
-        vbrBlue2             = "#85c1f1",
-        vbrRed               = "#f44747",
-        vbrPink              = "#ff66cc",
-        vbrCyan              = "#29d4f2",
-        vbrPurple            = "#9933cc",
-        vbrPurple1           = "#ffafff",
-        vbrWhite             = "#f5f5f5",
-
-        -- Brights
-        vbrBrightGray        = "#555555",
-        vbrBrightRed         = "#ff0000",
-        vbrBrightGreen       = "#00ff00",
-        vbrBrightYellow      = "#ffff00",
-        vbrBrightBlue        = "#003fff",
-        vbrBrightPink        = "#ff00ff",
-        vbrBrightCyan        = "#00ffff",
-        vbrBrightWhite       = "#e5e5e5",
+        vbrError       = vbrRed,
+        vbrHint        = vbrOrange,
+        vbrWarning     = vbrYellow,
+        vbrInfo        = vbrGreen,
+        vbrSelectionBg = isDark and vbrBgAlt or "#cceeff",
+        vbrSelectionFg = vbrNone,
     }
 end
 

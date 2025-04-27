@@ -13,9 +13,6 @@ vibr.load = function()
     vim.o.termguicolors = true
     vim.g.colors_name = "vibr"
 
-    -- TODO: Better light variant
-    vim.o.background = "dark"
-
     theme.set_highlights()
     theme.link_highlight()
 end

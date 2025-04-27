@@ -2,257 +2,153 @@ local theme = {}
 local hl = vim.api.nvim_set_hl
 
 theme.set_highlights = function()
-    local p = require("vibr.pallete").get_pallete()
-
+    local isDark = vim.o.background == "dark"
+    local p = require("vibr.pallete").get_pallete();
+    -- Core UI
     hl(0, "Normal", { fg = p.vbrFg, bg = p.vbrBg })
-    hl(0, "ColorColumn", { fg = p.vbrNone, bg = p.vbrFg2 })
-    hl(0, "Cursor", { fg = p.vbrNone, bg = p.vbrBg, bold = true })
-    hl(0, "CursorLine", { bg = p.vbrSelectionBg, fg = p.vbrSelectionFg })
-    hl(0, "CursorLineNr", { fg = p.vbrWhite, bg = p.vbrBg })
-    hl(0, "CursorColumn", { fg = p.vbrNone, bg = p.vbrCursorBorder })
-    hl(0, "Directory", { fg = p.vbrBlue, bg = p.vbrBg })
+    hl(0, "ColorColumn", { fg = p.vbrNone, bg = p.vbrBgAlt })
+    hl(0, "Cursor", { fg = p.vbrNone, bg = p.vbrNone })
+    hl(0, "CursorLine", { fg = p.vbrSelectionFg, bg = p.vbrSelectionBg })
+    hl(0, "Directory", { fg = p.vbrBlue, bg = p.vbrNone })
+    hl(0, "EndOfBuffer", { fg = p.vbrNone, bg = p.vbrNone })
+    hl(0, "VertSplit", { fg = p.vbrNone, bg = p.vbrBgAlt })
+    hl(0, "WinSeparator", { link = "VertSplit" })
+    hl(0, "SignColumn", { fg = p.vbrNone, bg = p.vbrBg })
+    hl(0, "StatusLine", { fg = p.vbrFg, bg = p.vbrBg })
+    hl(0, "StatusLineNC", { fg = p.vbrFgDim, bg = p.vbrBg })
+    hl(0, "TabLine", { fg = p.vbrFg, bg = p.vbrBg })
+    hl(0, "TabLineSel", { fg = p.vbrNone, bg = p.vbrBgAlt })
+    hl(0, "TabLineFill", { fg = p.vbrFg, bg = p.vbrBg })
+    hl(0, "WinBar", { fg = p.vbrFg, bg = p.vbrBg, bold = true })
+    hl(0, "WinBarNc", { fg = p.vbrFg, bg = p.vbrBg })
+    hl(0, "QuickFixLine", { link = "CursorLine" })
 
-    hl(0, "netrwExe", { fg = p.vbrYellow })
+    -- netrw
+    hl(0, "netrwExe", { fg = p.vbrRed })
     hl(0, "netrwDir", { link = "Directory" })
 
-    hl(0, "DiffAdd", { fg = p.vbrNone, bg = p.vbrSelectionBgBlue })
-    hl(0, "DiffChange", { fg = p.vbrNone, bg = p.vbrSelectionBg })
-    hl(0, "DiffDelete", { fg = p.vbrNone, bg = p.vbrSelectionBgRed })
-    hl(0, "DiffText", { fg = p.vbrNone, bg = p.vbrSelectionFg })
+    -- Diff
+    hl(0, "DiffAdd", { bg = p.vbrNone, fg = p.vbrGreen })
+    hl(0, "DiffChange", { bg = p.vbrNone, fg = p.vbrGreen })
+    hl(0, "DiffDelete", { bg = p.vbrNone, fg = p.vbrRed })
+    hl(0, "DiffText", { bg = p.vbrNone, fg = p.vbrNone })
 
-    hl(0, "EndOfBuffer", { fg = p.vbrNone, bg = p.vbrNone })
-    hl(0, "VertSplit", { fg = p.vbrNone, bg = p.vbrBg })
-    hl(0, "WinSeparator", { link = "VertSplit" })
+    -- Git Conflict
+    hl(0, "GitConflictCurrentLabel", { bg = p.vbrRed, fg = p.vbrWhite, bold = true })
+    hl(0, "GitConflictCurrent", { fg = p.vbrNone, bg = p.vbrBgAlt })
 
-    -- hl(0, "Folded", { fg = c.vbrNone, bg = c.vscFoldBackground })
-    -- hl(0, "FoldColumn", { fg = c.vscLineNumber, bg = c.vscBack })
-    hl(0, "SignColumn", { fg = p.vbrNone, bg = p.vbrBg })
+    hl(0, "GitConflictIncomingLabel", { bg = p.vbrRed, fg = p.vbrWhite, bold = true })
+    hl(0, "GitConflictIncoming", { fg = p.vbrNone, bg = p.vbrBgAlt })
 
-    hl(0, "Search", { fg = p.vbrBrightWhite, bg = p.vbrSelectionBg })
-    hl(0, "CurSearch", { fg = p.vbrBrightWhite, bg = p.vbrBlue, bold = true })
-    hl(0, "IncSearch", { fg = p.vbrBrightWhite, bg = p.vbrBlue })
+    hl(0, "GitConflictAncestorLabel", { bg = p.vbrRed, fg = p.vbrWhite, bold = true })
+    hl(0, "GitConflictAncestor", { fg = p.vbrNone, bg = p.vbrBgAlt })
 
-    hl(0, "LineNr", { fg = p.vbrWhite, bg = p.vbrBg })
-    hl(0, "MatchParen", { fg = p.vbrWhite, bg = p.vbrNone })
+    -- Git Signs
+    hl(0, "GitSignsAdd", { link = "DiffAdd" })
+    hl(0, "GitSignsChange", { link = "DiffChange" })
+    hl(0, "GitSignsDelete", { link = "DiffDelete" })
+    hl(0, "GitSignsNormal", { link = "DiffDelete" })
+
+    -- Search
+    hl(0, "Search", { fg = p.vbrSelectionFg, bg = isDark and p.vbrBlue or p.vbrSelectionBg })
+    hl(0, "CurSearch", { fg = p.vbrSelectionFg, bg = isDark and p.vbrBlue or p.vbrSelectionBg, bold = true })
+    hl(0, "IncSearch", { fg = p.vbrSelectionFg, bg = isDark and p.vbrBlue or p.vbrSelectionBg })
+
+    -- UI Messages
     hl(0, "ModeMsg", { fg = p.vbrFg, bg = p.vbrBg })
     hl(0, "MoreMsg", { fg = p.vbrFg, bg = p.vbrBg })
     hl(0, "NonText", { fg = p.vbrFg, bg = p.vbrNone })
 
-    hl(0, "Pmenu", { fg = p.vbrFg, bg = p.vbrBg1 })
-    hl(0, "PmenuSel", { fg = p.vbrSelectionFg, bg = p.vbrSelectionBg })
+    -- Popup Menu
+    hl(0, "Pmenu", { fg = p.vbrFg, bg = p.vbrBg })
+    hl(0, "PmenuSel", { link = "CursorLine" })
     hl(0, "PmenuSbar", { fg = p.vbrNone, bg = p.vbrNone })
     hl(0, "PmenuThumb", { fg = p.vbrNone, bg = p.vbrNone })
 
-    hl(0, "Question", { fg = p.vbrFg, bg = p.vbrNone })
-    hl(0, "SpecialKey", { fg = p.vbrRed, bg = p.vbrNone })
-
-    hl(0, "StatusLine", { fg = p.vbrFg, bg = p.vbrNone })
-    hl(0, "StatusLineNC", { fg = p.vbrFg, bg = p.vbrNone })
-
-    hl(0, "TabLine", { fg = p.vbrFg, bg = p.vbrBg })
-    hl(0, "TabLineFill", { fg = p.vbrFg, bg = p.vbrBg })
-    hl(0, "TabLineSel", { fg = p.vbrSelectionFg, bg = p.vbrSelectionBg })
-
-    -- hl(0, "Title", { fg = c.vscNone, bg = c.vscNone, bold = true })
-
-    hl(0, "Visual", { fg = p.vbrSelectionFg, bg = p.vbrSelectionBg })
+    -- Visual and WildMenu
+    hl(0, "Visual", { fg = p.vbrNone, bg = p.vbrBgAlt })
     hl(0, "VisualNOS", { link = "Visual" })
-    hl(0, "WildMenu", { fg = p.vbrBrightWhite, bg = p.vbrBg1 })
 
-    hl(0, "Comment", { fg = p.vbrGreen2, bg = p.vbrNone, italic = false })
-    hl(0, "Constant", { fg = p.vbrBrightWhite, bg = p.vbrNone })
-    hl(0, "String", { fg = p.vbrBrightWhite, bg = p.vbrNone })
-    hl(0, "Character", { fg = p.vbrBrightWhite, bg = p.vbrNone })
-    hl(0, "Boolean", { fg = p.vbrPink, bg = p.vbrNone })
-    hl(0, "Number", { fg = p.vbrPink, bg = p.vbrNone })
-    hl(0, "Float", { fg = p.vbrPink, bg = p.vbrNone })
+    -- Comments and Constants
+    hl(0, "Comment", { fg = p.vbrPurple, bg = p.vbrNone, italic = true })
+    hl(0, "Constant", { fg = p.vbrBlue })
+    hl(0, "String", { fg = p.vbrGray, bg = p.vbrBg })
+    hl(0, "Character", { fg = p.vbrGreen, bg = p.vbrBg })
+    hl(0, "Boolean", { fg = p.vbrPink })
+    hl(0, "Number", { fg = p.vbrPink })
+    hl(0, "Float", { fg = p.vbrPink })
 
-    hl(0, "Identifier", { fg = p.vbrFg1, bg = p.vbrNone })
-    hl(0, "Function", { fg = p.vbrFg, bg = p.vbrNone, bold = true })
-    hl(0, "Constructor", { fg = p.vbrFg, bg = p.vbrNone, bold = true })
-    hl(0, "Statement", { fg = p.vbrYellow, bg = p.vbrNone })
-    hl(0, "Conditional", { fg = p.vbrYellow, bg = p.vbrNone })
-    hl(0, "Repeat", { fg = p.vbrYellow, bg = p.vbrNone })
-    hl(0, "Label", { fg = p.vbrYellow, bg = p.vbrNone })
-    hl(0, "Operator", { fg = p.vbrFg, bg = p.vbrNone, bold = true })
+    -- Identifiers, Functions, Statements
+    hl(0, "Identifier", { fg = p.vbrNone })
+    hl(0, "Function", { fg = p.vbrYellow, bg = p.vbrBg, bold = false })
+    hl(0, "Statement", { fg = p.vbrRed })
+    hl(0, "Conditional", { link = "Statement" })
+    hl(0, "Repeat", { link = "Statement" })
+    hl(0, "Label", { fg = p.vbrRed })
+    hl(0, "Operator", { fg = p.vbrNone })
+    hl(0, "Keyword", { fg = p.vbrRed, bg = p.vbrBg, bold = true })
+    hl(0, "Exception", { fg = p.vbrRed })
+    hl(0, "Include", { fg = p.vbrBlue })
+    hl(0, "Define", { fg = p.vbrGreen })
+    hl(0, "Macro", { fg = p.vbrGreen })
 
-    hl(0, "Keyword", { fg = p.vbrYellow, bg = p.vbrNone })
-    hl(0, "Exception", { fg = p.vbrYellow, bg = p.vbrNone })
-    hl(0, "PreProc", { fg = p.vbrFg, bg = p.vbrNone })
-    hl(0, "Include", { fg = p.vbrFg, bg = p.vbrNone })
-    hl(0, "Define", { fg = p.vbrBlue2, bg = p.vbrNone })
-    hl(0, "Macro", { fg = p.vbrBrightGreen, bg = p.vbrNone })
+    -- Types and Storage
+    hl(0, "Type", { fg = p.vbrCyan })
+    hl(0, "StorageClass", { fg = p.vbrFg })
+    hl(0, "Structure", { fg = p.vbrCyan })
+    hl(0, "Typedef", { fg = p.vbrFg })
 
-    hl(0, "Type", { fg = p.vbrBlue1, bg = p.vbrNone })
-    hl(0, "StorageClass", { fg = p.vbrFg, bg = p.vbrNone })
-    hl(0, "Structure", { fg = p.vbrBlue1, bg = p.vbrNone })
-    hl(0, "Typedef", { fg = p.vbrFg, bg = p.vbrNone })
-
-    hl(0, "Special", { fg = p.vbrFg, bg = p.vbrNone })
-    hl(0, "SpecialChar", { fg = p.vbrRed, bg = p.vbrNone, bold = true })
-    hl(0, "Tag", { fg = p.vbrYellow, bg = p.vbrNone })
-    hl(0, "Delimiter", { fg = p.vbrFg1, bg = p.vbrNone, bold = true })
+    -- Special
+    hl(0, "Special", { fg = p.vbrFg })
+    hl(0, "SpecialChar", { fg = p.vbrRed, bold = true })
+    hl(0, "Tag", { fg = p.vbrCyan })
+    hl(0, "Delimiter", { fg = p.vbrFgDim })
     hl(0, "SpecialComment", { link = "Comment" })
 
-    hl(0, "Debug", { fg = p.vbrFg, bg = p.vbrNone })
+    -- Diagnostics
+    hl(0, "Error", { fg = p.vbrError, bg = p.vbrBg, bold = true })
+    hl(0, "ErrorMsg", { link = "Error" })
+    hl(0, "WarningMsg", { fg = p.vbrWarning, bg = p.vbrBg, bold = true })
+    hl(0, "Todo", { fg = p.vbrInfo, bg = p.vbrBg, bold = true, underline = true })
+
+    hl(0, "DiagnosticError", { fg = p.vbrError, bg = p.vbrNone })
+    hl(0, "DiagnosticWarn", { fg = p.vbrWarning, bg = p.vbrNone })
+    hl(0, "DiagnosticInfo", { fg = p.vbrInfo, bg = p.vbrNone })
+    hl(0, "DiagnosticHint", { fg = p.vbrHint, bg = p.vbrNone })
+    hl(0, "DiagnosticSignError", { link = "DiagnosticError" })
+    hl(0, "DiagnosticSignWarn", { link = "DiagnosticWarn" })
+    hl(0, "DiagnosticSignInfo", { link = "DiagnosticInfo" })
+    hl(0, "DiagnosticSignHint", { link = "DiagnosticHint" })
+    hl(0, "DiagnosticVirtualLinesError", { link = "DiagnosticError" })
+    hl(0, "DiagnosticUnderlineError", { bg = p.vbrNone, fg = p.vbrNone })
+    hl(0, "DiagnosticUnderlineWarn", { bg = p.vbrNone, fg = p.vbrNone })
+    hl(0, "DiagnosticUnderlineInfo", { bg = p.vbrNone, fg = p.vbrNone })
+    hl(0, "DiagnosticUnderlineHint", { bg = p.vbrNone, fg = p.vbrNone })
+
+    -- Underline & Spell
     hl(0, "Underlined", { fg = p.vbrNone, bg = p.vbrNone, underline = true })
     hl(0, "Ignore", { fg = p.vbrFg, bg = p.vbrNone })
-    hl(0, "Error", { fg = p.vbrRed, bg = p.vbrNone, bold = true })
-    hl(0, "Todo", { fg = p.vbrYellow, bg = p.vbrNone, bold = true })
-    hl(0, "ErrorMsg", { link = "Error" })
-    hl(0, "WarningMsg", { link = "Todo" })
 
-    -- TODO:
-    -- hl(0, "SpellBad", { fg = c.vbrNone, undercurl = true, sp = c.vbrRed })
-    -- hl(0, "SpellCap", { fg = c.vbrNone, undercurl = true, sp = c.vscYellow })
-    -- hl(0, "SpellRare", { fg = c.vbrNone, undercurl = true, sp = c.vscViolet })
-    -- hl(0, "SpellLocal", { fg = c.vbrNone, undercurl = true, sp = c.vscBlue })
-
+    -- Whitespace & Floats
     hl(0, "Whitespace", { fg = p.vbrRed })
-    hl(0, "NormalFloat", { bg = p.vbrBg1, fg = p.vbrBrightWhite })
-    hl(0, "WinBar", { fg = p.vbrFg, bg = p.vbrBg, bold = true })
-    hl(0, "WinBarNc", { fg = p.vbrFg, bg = p.vbrBg })
-    hl(0, "QuickFixLine", { fg = p.vbrSelectionFg, bg = p.vbrSelectionBg, bold = true })
+    hl(0, "NormalFloat", { fg = p.vbrFg, bg = p.vbrBgAlt })
 
     -- Treesitter
-    hl(0, "@error", { link = "Error" }) -- Legacy
-    hl(0, "@punctuation.bracket", { link = "Delimiter" })
-    hl(0, "@punctuation.special", { link = "Delimiter" })
-    hl(0, "@punctuation.delimiter", { link = "Delimiter" })
-
+    hl(0, "@error", { link = "Error" })
+    hl(0, "@punctuation", { fg = p.vbrFgDim })
     hl(0, "@comment", { link = "Comment" })
-    hl(0, "@comment.note", { link = "Todo" })
-    hl(0, "@comment.warning", { link = "Todo" })
-    hl(0, "@comment.error", { link = "Error" })
-
     hl(0, "@constant", { link = "Constant" })
-    hl(0, "@constant.builtin", { link = "@constant" })
-    hl(0, "@constant.macro", { link = "@constant" })
-
     hl(0, "@string", { link = "String" })
-    hl(0, "@string.regexp", { link = "@string" })
-    hl(0, "@character", { link = "@string" })
-
+    hl(0, "@character", { link = "String" })
     hl(0, "@boolean", { link = "Boolean" })
-
     hl(0, "@number", { link = "Number" })
-    hl(0, "@number.float", { link = "Float" })
-
-    hl(0, "@annotation", { link = "Special" })
-    hl(0, "@attribute", { link = "@variable" })
-    hl(0, "@attribute.builtin", { link = "@attribute" })
-    hl(0, "@module", { link = "@variable" })
-
     hl(0, "@function", { link = "Function" })
-    hl(0, "@function.builtin", { link = "@keyword" })
-    hl(0, "@function.macro", { link = "@function" })
-    hl(0, "@function.method", { link = "@function" })
-    hl(0, "@label", { link = "@function" })
-    hl(0, "@constructor", { link = "Constructor" })
-
-    hl(0, "@define", { link = "Define" })
-    hl(0, "@variable", { link = "Identifier" })
-    hl(0, "@variable.builtin", { link = "@keyword" })
-    hl(0, "@variable.parameter", { link = "@variable" })
-    hl(0, "@variable.parameter.reference", { link = "@variable" })
-    hl(0, "@variable.member", { link = "@variable" })
-    hl(0, "@property", { link = "@variable" })
-
     hl(0, "@keyword", { link = "Keyword" })
-    hl(0, "@keyword.conditional", { link = "@keyword" })
-    hl(0, "@keyword.repeat", { link = "@keyword" })
-    hl(0, "@keyword.return", { link = "@keyword" })
-    hl(0, "@keyword.exception", { link = "@keyword" })
-    hl(0, "@keyword.import", { link = "@keyword" })
-    hl(0, "@keyword.storage", { link = "@keyword" })
-    hl(0, "@structure", { link = "@keyword" })
-
-    hl(0, "@operator", { link = "Operator" })
     hl(0, "@type", { link = "Type" })
-    hl(0, "@type.qualifier", { link = "@type" })
-    hl(0, "@type.builtin", { fg = p.vbrBlue, bg = p.vbrNone })
-
-    hl(0, "@event", { link = "@variable" })
-    hl(0, "@interface", { link = "@keyword" })
-    hl(0, "@modifier", { link = "@keyword" })
-    hl(0, "@decorator", { link = "@keyword" })
-
-    hl(0, "@lsp.type.type", { link = "@type" })
-    hl(0, "@lsp.type.typeParameter", { link = "@type" })
-    hl(0, "@lsp.type.macro", { link = "@define" })
-    hl(0, "@lsp.type.enumMember", { link = "@type" })
-    hl(0, "@lsp.type.member", { link = "@function" })
-    hl(0, "@lsp.type.keyword", { link = "@keyword" })
-    hl(0, "@lsp.type.comment.c", { link = "@comment" })
-    hl(0, "@lsp.type.comment.cpp", { link = "@comment" })
-    hl(0, "@lsp.typemod.variable.readonly", { link = "@variable" })
-    hl(0, "@lsp.typemod.variable.constant", { link = "@variable" })
-    hl(0, "@lsp.typemod.property.readonly", { link = "@property" })
-    hl(0, "@lsp.typemod.type.defaultLibrary", { link = "@type.builtin" })
-    hl(0, "@lsp.typemod.keyword.controlFlow", { link = "@lsp.type.keyword" })
-
-    hl(0, "@tag", { link = "Tag" })
-    hl(0, "@tag.builtin", { link = "@type.builtin" })
-    hl(0, "@tag.delimiter", { link = "@punctuation.delimiter" })
-    hl(0, "@tag.attribute", { link = "@punctuation.special" })
-    hl(0, "@text", { link = "Normal" }) -- Legacy
-    hl(0, "@markup.strong", { fg = p.vbrFg, bg = p.vbrNone, bold = true })
-    hl(0, "@markup.italic", { fg = p.vbrFg, bg = p.vbrNone, italic = true })
-    hl(0, "@markup.underline", { fg = p.vbrFg, bg = p.vbrNone, underline = true })
-    hl(0, "@markup.strikethrough", { fg = p.vbrFg, bg = p.vbrNone, strikethrough = true })
-    hl(0, "@markup.heading", { fg = p.vbrBrightWhite, bold = true })
-    hl(0, "@markup.raw", { fg = p.vbrFg, bg = p.vbrNone })
-    hl(0, "@markup.raw.markdown", { link = "@markup.raw" })
-    hl(0, "@markup.raw.markdown_inline", { link = "@markup.raw" })
-    hl(0, "@markup.link.label", { fg = p.vbrFg1, bg = p.vbrNone })
-    hl(0, "@markup.link.url", { fg = p.vbrBlue, bg = p.vbrNone, underline = false })
-    hl(0, "@markup.list.checked", { fg = p.vbrFg })
-    hl(0, "@markup.list.unchecked", { fg = p.vbrFg2 })
-    hl(0, "@textReference", { fg = p.vbrRed })
-    hl(0, "@stringEscape", { fg = p.vbrRed, bold = true })
-
-    hl(0, "@diff.plus", { link = "DiffAdd" })
-    hl(0, "@diff.minus", { link = "DiffDelete" })
-    hl(0, "@diff.delta", { link = "DiffChange" })
-
-    -- Git Signs
-    hl(0, "GitSignsAdd", { fg = p.vbrSelectionBgBlue, bg = p.vbrNone })
-    hl(0, "GitSignsChange", { fg = p.vbrSelectionBgYellow, bg = p.vbrNone })
-    hl(0, "GitSignsDelete", { fg = p.vbrSelectionBgRed, bg = p.vbrNone })
-    hl(0, "GitSignsAddLn", { fg = p.vbrBg, bg = p.vbrSelectionBgBlue })
-    hl(0, "GitSignsChangeLn", { fg = p.vbrBg, bg = p.vbrSelectionBgYellow })
-    hl(0, "GitSignsDeleteLn", { fg = p.vbrBg, bg = p.vbrSelectionBgRed })
-
-    -- LSP
-    hl(0, "DiagnosticOk", { fg = p.vbrFg1, bg = p.vbrNone })
-    hl(0, "DiagnosticError", { fg = p.vbrRed, bg = p.vbrNone })
-    hl(0, "DiagnosticWarn", { fg = p.vbrYellow, bg = p.vbrNone })
-    hl(0, "DiagnosticInfo", { fg = p.vbrFg1, bg = p.vbrNone })
-    hl(0, "DiagnosticHint", { link = "DiagnosticInfo" })
-    hl(0, "DiagnosticUnnecessary", { fg = p.vbrFg2, bg = p.vbrNone })
-    hl(0, "DiagnosticUnderlineError", { fg = p.vbrNone, bg = p.vbrNone, sp = p.vbrRed, undercurl = true })
-    hl(0, "DiagnosticUnderlineWarn", { fg = p.vbrNone, bg = p.vbrNone, sp = p.vbrYellow, undercurl = true, })
-    hl(0, "DiagnosticUnderlineInfo", { fg = p.vbrNone, bg = p.vbrNone, sp = p.vbrFg1, undercurl = true, })
-    hl(0, "DiagnosticUnderlineHint", { fg = p.vbrNone, bg = p.vbrNone, sp = p.vbrFg1, undercurl = true, })
-    hl(0, "LspReferenceText", { fg = p.vbrFg, bg = p.vbrNone })
-    hl(0, "LspReferenceRead", { link = "LspReferenceText" })
-    hl(0, "LspReferenceWrite", { link = "LspReferenceText" })
-
-    -- Nvim compe
-    hl(0, "CmpItemKindVariable", { link = "@variable" })
-    hl(0, "CmpItemKindInterface", { link = "@type" })
-    hl(0, "CmpItemKindText", { link = "@string" })
-    hl(0, "CmpItemKindFunction", { link = "@function" })
-    hl(0, "CmpItemKindMethod", { link = "@function.method" })
-    hl(0, "CmpItemKindKeyword", { link = "@keyword" })
-    hl(0, "CmpItemKindProperty", { link = "@property" })
-    hl(0, "CmpItemKindUnit", { link = "@keyword" })
-    hl(0, "CmpItemKindConstructor", { link = "@constructor" })
-    hl(0, "CmpItemMenu", { fg = p.vbrNone, bg = p.vbrNone })
-    hl(0, "CmpItemAbbr", { fg = p.vbrNone, bg = p.vbrNone })
-    hl(0, "CmpItemAbbrDeprecated", { fg = p.vbrFg2, bg = p.vbrNone, strikethrough = true })
-    hl(0, "CmpItemAbbrMatch", { fg = p.vbrNone, bg = p.vbrNone, bold = true })
-    hl(0, "CmpItemAbbrMatchFuzzy", { fg = p.vbrNone, bg = p.vbrNone, bold = true })
+    hl(0, "@variable", { link = "Identifier" })
+    hl(0, "@operator", { link = "Operator" })
+    hl(0, "@attribute", { link = "Identifier" })
+    hl(0, "@property", { link = "Identifier" })
 end
 
 theme.link_highlight = function()
